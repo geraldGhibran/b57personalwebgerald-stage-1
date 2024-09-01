@@ -1,0 +1,39 @@
+.navbar-container {
+  padding: 20px;
+  background-color: #f4f3f3;
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
+  margin-bottom: 50px;
+  
+}
+
+.navbar-container > li > a {
+ color: black;
+}
+
+.navbar-logo {
+  width: 50px;
+  height: 25px;
+  object-fit: contain;
+}
+
+.navbar-link {
+  text-decoration: none;
+}
+
+.navbar-right {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+}
+
+.navbar-contact-button {
+  background-color: black;
+  padding: 20px;
+  color: white;
+  border-radius: 10px;
+  text-decoration: none;
+}

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CRUD Operation</title>
+    <style>
+      *,
+      body {
+        margin: 0;
+      }
+    </style>
+    <link rel="stylesheet" href="assets/css/nav.css" />
+    <link rel="stylesheet" href="assets/css/blog.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+      integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- navbar start -->
+    <nav>
+      <ul class="navbar-container">
+        <li>
+          <img
+            src="https://dumbways.id/assets/images/brandred.png"
+            class="navbar-logo"
+          />
+        </li>
+        <li>
+          <a href="index.html" class="navbar-link poppins-bold"> Home </a>
+        </li>
+        <li>
+          <a href="project.html" class="navbar-link poppins-regular"> Project </a>
+        </li>
+        <li class="navbar-right">
+          <a
+            href="contact.html"
+            class="navbar-contact-button poppins-regular"
+            style="color: white"
+            >Contact Me</a
+          >
+        </li>
+      </ul>
+    </nav>
+
+    <div class="blog">
+      <div class="blog-form">
+        <div class="form-container">
+          <form onsubmit="AddDataProject(event)">
+            <h1>ADD MY PROJECT</h1>
+            <div>
+              <label for="input-project-name">Project Name</label>
+              <input id="input-project-name" />
+            </div>
+            <div class="project-date">
+              <div>
+                <label for="input-project-startdate">Start Date</label>
+                <input type="date" id="input-project-startdate" />
+              </div>
+              <div>
+                <label for="input-project-enddate">End Date</label>
+                <input type="date" id="input-project-enddate" />
+              </div>
+            </div>
+            <div>
+              <label for="input-project-description">Description</label>
+              <textarea id="input-project-description"></textarea>
+            </div>
+            <label for="input-project-startdate">Technologies</label>
+            <div class="technologies-container">
+              <div class="technologies-item">
+                <input
+                  type="checkbox"
+                  id="nodejs"
+                  name="nodejs"
+                  value="nodejs"
+                />
+                <label for="nodejs"> Node Js</label>
+              </div>
+              
+              <div class="technologies-item">
+                <input
+                  type="checkbox"
+                  id="nextjs"
+                  name="vehicle2"
+                  value="nextjs"
+                />
+                <label for="nextjs">Next Js</label>
+              </div>
+              <div class="technologies-item">
+                <input
+                  type="checkbox"
+                  id="reactjs"
+                  name="reactjs"
+                  value="reactjs"
+                />
+                <label for="reactjs">React Js</label>
+              </div>
+              <div class="technologies-item">
+                <input
+                  type="checkbox"
+                  id="typescript"
+                  name="typescript"
+                  value="typescript"
+                />
+                <label for="typescript">Typescript</label>
+              </div>
+            </div>
+
+            <div>
+              <label>Upload Image</label>
+              <div class="input-blog-image-group">
+                <label for="input-blog-image">
+                  <p>Attach File</p>
+                  <i class="fa-solid fa-paperclip"></i>
+                </label>
+                <input type="file" id="input-project-image" />
+              </div>
+            </div>
+            <div class="button-group">
+              <!-- <button type="submit">Submit</button> -->
+              <button type="submit" class="btn submitButton w-100">Add</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <hr class="line" />
+      <div id="contents" class="blog-list">
+        <!-- dynamic content would be here -->
+      </div>
+    </div>
+    <div class="container card-body-all">
+      <div class="card-container d-flex flex-wrap" id="curd-table"></div>
+      <div class="card-container d-flex flex-wrap" id="sort-table"></div>
+    </div>
+    <!-- navbar end -->
+
+    <div
+      class="modal fade"
+      id="exampleModal-2"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" id="form">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">
+              Update Product Data
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <div id="image-div"></div>
+                <label for="exampleFormControlInput1">Project Id -</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="id-edit"
+                  aria-label="Sizing example input"
+                  aria-describedby="inputGroup-sizing-default"
+                  disabled
+                />
+              </div>
+              <div class="form-group mt-2">
+                <label for="exampleFormControlSelect1">Name -</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="name-edit"
+                  placeholder="Enter Product name"
+                  aria-label="Sizing example input"
+                  aria-describedby="inputGroup-sizing-default"
+                />
+              </div>
+              <div class="form-group mt-2">
+                <label for="exampleFormControlSelect1">Start Date -</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  id="start-date-edit"
+                  placeholder="Enter Product Price"
+                  aria-label="Sizing example input"
+                  aria-describedby="inputGroup-sizing-default"
+                />
+              </div>
+              <div class="form-group mt-2">
+                <label for="exampleFormControlSelect1">End Date -</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  id="end-date-edit"
+                  placeholder="Enter Product Price"
+                  aria-label="Sizing example input"
+                  aria-describedby="inputGroup-sizing-default"
+                />
+              </div>
+              <div class="form-group mt-2">
+                <label for="exampleFormControlTextarea1">Description -</label>
+                <textarea
+                  class="form-control h-25"
+                  id="description-edit"
+                  placeholder="Enter Description of Product"
+                  rows="3"
+                ></textarea>
+              </div>
+              <div class="form-group mt-2">
+                <label for="exampleFormControlSelect1">Product - Image -</label>
+                <input type="file" class="form-control" id="image-edit" />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success w-100" id="update">
+              Update
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Edit Module End -->
+
+    <!-- Add Module End -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+    <script src="assets/js/script.js"></script>
+  </body>
+</html>
