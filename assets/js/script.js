@@ -94,11 +94,10 @@ function showData() {
         <div class='p-3'>
         <div class='card d-flex card-all'>
         <div class='card-body'style=" height: 11rem; width: 16rem;">
-        <h5 class='card-title text-center'><strong>Item No.-</strong> ${element.id} </h5>
+        <h5 class='card-title text-center'><strong>${element.projectName}</strong>  </h5>
         <img src="${element.image}" class="card-img-top" id='sendParams' alt='Image' style=" height: 7rem; width: 14rem;">
         </div>
         <ul class='list-group list-group-flush'>
-        <li class='list-group-item'><strong>Project -</strong>  ${element.projectName}  </li>
         <li class='list-group-item'><strong>Start Date -</strong>  ${element.startDate}</li>
         <li class='list-group-item'><strong>End Date -</strong>  ${element.endDate}</li>
         <li class='list-group-item h-25'> <button onclick="getDetail(${index})" type='button' class='btn btn-primary' style="width: 49%">Detail <span><i class="fa-solid fa-eye"></i></span> </button> </li>
@@ -329,7 +328,6 @@ function searchProduct(sortedItem) {
         <div class='p-3'>
         <div class='card d-flex card-all'>
         <div class='card-body'style=" height: 11rem; width: 16rem;">
-        <h5 class='card-title text-center'><strong>Item No.-</strong> ${element.id} </h5>
         <img src="${element.image}" class="card-img-top" alt='Image' style=" height: 7rem; width: 14rem;">
         </div>
         <ul class='list-group list-group-flush'>
@@ -426,7 +424,6 @@ function filteredData(sortedProduct) {
         <div class='p-3'>
         <div class='card d-flex card-all'>
         <div class='card-body'style=" height: 11rem; width: 16rem;">
-        <h5 class='card-title text-center'><strong>Item No.-</strong> ${element.id} </h5>
         <img src="${element.image}" class="card-img-top" alt='Image' style=" height: 7rem; width: 14rem;">
         </div>
         <ul class='list-group list-group-flush'>

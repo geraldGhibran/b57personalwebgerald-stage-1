@@ -12,6 +12,13 @@
     </style>
     <link rel="stylesheet" href="assets/css/nav.css" />
     <link rel="stylesheet" href="assets/css/blog.css" />
+    <link rel="stylesheet" href="assets/css/checkout.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -29,42 +36,85 @@
       href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="assets/css/style.css" />
   </head>
   <body>
     <!-- navbar start -->
-    <nav>
-      <ul class="navbar-container">
-        <li>
+    <header data-bs-theme="dark">
+      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-white">
+        <div class="container-fluid">
           <img
             src="https://dumbways.id/assets/images/brandred.png"
-            class="navbar-logo"
+            class="navbar-brand navbar-logo"
           />
-        </li>
-        <li>
-          <a href="index.html" class="navbar-link poppins-bold"> Home </a>
-        </li>
-        <li>
-          <a href="project.html" class="navbar-link poppins-regular"> Project </a>
-        </li>
-        <li class="navbar-right">
-          <a
-            href="contact.html"
-            class="navbar-contact-button poppins-regular"
-            style="color: white"
-            >Contact Me</a
+          <button
+            class="navbar-toggler text-dark"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarCollapse"
+            aria-controls="navbarCollapse"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
           >
-        </li>
-      </ul>
-    </nav>
+            <span class="navbar-toggler-icon"
+              ><i
+                style="padding-top: 5px"
+                class="fa fa-bars"
+                aria-hidden="true"
+              ></i
+            ></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav me-auto mb-2 mb-md-0">
+              <li class="nav-item active">
+                <a class="nav-link text-dark poppins-regular" href="#">Home </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark poppins-bold" href="project.html"
+                  >Add Project <span class="sr-only">(current)</span></a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link text-dark poppins-regular"
+                  href="testimonial.html"
+                  >Testimonial</a
+                >
+              </li>
+            </ul>
+            <form action="contact.html" class="form-inline mt-2 mt-md-0">
+              <button
+                class="btn bg-dark text-white my-2 my-sm-0 poppins-bold"
+                type="submit"
+              >
+                contact me
+              </button>
+            </form>
+          </div>
+        </div>
+      </nav>
+    </header>
 
     <div class="blog">
       <div class="blog-form">
         <div class="form-container">
           <form onsubmit="AddDataProject(event)">
-            <h1>ADD MY PROJECT</h1>
+            <h1>ADD PROJECT</h1>
             <div>
-              <label for="input-project-name">Project Name</label>
-              <input id="input-project-name" />
+              <!-- <label for="input-project-name">Project Name</label>
+              <input id="input-project-name" /> -->
+
+              <label for="input-project-name" class="form-label"
+                >Project Name</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="input-project-name"
+                placeholder=""
+                value=""
+                required
+              />
             </div>
             <div class="project-date">
               <div>
@@ -81,18 +131,20 @@
               <textarea id="input-project-description"></textarea>
             </div>
             <label for="input-project-startdate">Technologies</label>
-            <div class="technologies-container">
-              <div class="technologies-item">
-                <input
-                  type="checkbox"
-                  id="nodejs"
-                  name="nodejs"
-                  value="nodejs"
-                />
-                <label for="nodejs"> Node Js</label>
+            <div class="technologie-container">
+              <div class="technologie-item">
+                <label for="nodejs">
+                  <input
+                    type="checkbox"
+                    id="nodejs"
+                    name="nodejs"
+                    value="nodejs"
+                  />
+                  Node Js</label
+                >
               </div>
-              
-              <div class="technologies-item">
+
+              <div class="technologie-item">
                 <input
                   type="checkbox"
                   id="nextjs"
@@ -101,7 +153,7 @@
                 />
                 <label for="nextjs">Next Js</label>
               </div>
-              <div class="technologies-item">
+              <div class="technologie-item">
                 <input
                   type="checkbox"
                   id="reactjs"
@@ -110,7 +162,7 @@
                 />
                 <label for="reactjs">React Js</label>
               </div>
-              <div class="technologies-item">
+              <div class="technologie-item">
                 <input
                   type="checkbox"
                   id="typescript"
@@ -123,12 +175,13 @@
 
             <div>
               <label>Upload Image</label>
-              <div class="input-blog-image-group">
-                <label for="input-blog-image">
-                  <p>Attach File</p>
-                  <i class="fa-solid fa-paperclip"></i>
-                </label>
-                <input type="file" id="input-project-image" />
+              <div class="mb-3">
+                <label for="formFile" class="form-label">Attach File</label>
+                <input
+                  class="form-control"
+                  type="file"
+                  id="input-project-image"
+                />
               </div>
             </div>
             <div class="button-group">
@@ -138,111 +191,9 @@
           </form>
         </div>
       </div>
-
-      <hr class="line" />
-      <div id="contents" class="blog-list">
-        <!-- dynamic content would be here -->
-      </div>
-    </div>
-    <div class="container card-body-all">
-      <div class="card-container d-flex flex-wrap" id="curd-table"></div>
-      <div class="card-container d-flex flex-wrap" id="sort-table"></div>
     </div>
     <!-- navbar end -->
 
-    <div
-      class="modal fade"
-      id="exampleModal-2"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content" id="form">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">
-              Update Product Data
-            </h1>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <form>
-              <div class="form-group">
-                <div id="image-div"></div>
-                <label for="exampleFormControlInput1">Project Id -</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="id-edit"
-                  aria-label="Sizing example input"
-                  aria-describedby="inputGroup-sizing-default"
-                  disabled
-                />
-              </div>
-              <div class="form-group mt-2">
-                <label for="exampleFormControlSelect1">Name -</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="name-edit"
-                  placeholder="Enter Product name"
-                  aria-label="Sizing example input"
-                  aria-describedby="inputGroup-sizing-default"
-                />
-              </div>
-              <div class="form-group mt-2">
-                <label for="exampleFormControlSelect1">Start Date -</label>
-                <input
-                  type="date"
-                  class="form-control"
-                  id="start-date-edit"
-                  placeholder="Enter Product Price"
-                  aria-label="Sizing example input"
-                  aria-describedby="inputGroup-sizing-default"
-                />
-              </div>
-              <div class="form-group mt-2">
-                <label for="exampleFormControlSelect1">End Date -</label>
-                <input
-                  type="date"
-                  class="form-control"
-                  id="end-date-edit"
-                  placeholder="Enter Product Price"
-                  aria-label="Sizing example input"
-                  aria-describedby="inputGroup-sizing-default"
-                />
-              </div>
-              <div class="form-group mt-2">
-                <label for="exampleFormControlTextarea1">Description -</label>
-                <textarea
-                  class="form-control h-25"
-                  id="description-edit"
-                  placeholder="Enter Description of Product"
-                  rows="3"
-                ></textarea>
-              </div>
-              <div class="form-group mt-2">
-                <label for="exampleFormControlSelect1">Product - Image -</label>
-                <input type="file" class="form-control" id="image-edit" />
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-success w-100" id="update">
-              Update
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Edit Module End -->
-
-    <!-- Add Module End -->
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
