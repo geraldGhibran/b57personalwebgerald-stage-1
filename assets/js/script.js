@@ -124,7 +124,7 @@ function getDetail(id) {
   const params = new URLSearchParams({
     id: id,
   });
-  window.location.href = `blog-detail.html?${params.toString()}`;
+  window.location.href = `project-detail.html?${params.toString()}`;
 }
 
 // Load all data when document or page load
@@ -192,6 +192,7 @@ function AddDataProject(event) {
       endDate: inputProjectEndDate,
       description: inputDescription,
       skills: skills,
+      createdDate: new Date(),
       image: reader.result,
     });
     localStorage.setItem("projectList", JSON.stringify(projectList));

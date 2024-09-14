@@ -106,14 +106,13 @@
     <main role="main">
       <div class="container">
         <div class="jumbotron p-3 p-md-5 text-white rounded"></div>
-
         <div class="row mb-2">
-          <div class="col-md-12">
-            <div class="card flex-md-row mb-4 box-shadow h-md-250">
+          <div class="card flex-md-row mb-4 box-shadow h-md-250">
+            <div class="col-md-8 col-lg-9 col-xl-9">
               <div class="card-body d-flex flex-column align-items-start">
                 <div>
                   <h1 class="poppins-bold" style="text-align: center">
-                    Gerald Ghibran Gunasha
+                    Welcome to my personal website
                   </h1>
                   <p class="poppins-regular">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -127,22 +126,28 @@
                     lorem id ipsum dictum placerat. Nam et lorem vitae felis
                     pharetra dictum.
                   </p>
-                  <button
-                    class="poppins-semibold"
-                    style="
-                      background-color: black;
-                      border-radius: 20px;
-                      color: white;
-                      width: 100px;
-                      height: 35px;
-                    "
-                  >
-                    contact
-                  </button>
-                  <p class="poppins-semibold">
-                    download cv
-                    <i class="fa fa-download" aria-hidden="true"></i>
-                  </p>
+                  <div class="d-flex flex-row mb-3">
+                    <div class="p-2">
+                      <button
+                        class="poppins-semibold"
+                        style="
+                          background-color: black;
+                          border-radius: 20px;
+                          color: white;
+                          width: 100px;
+                          height: 35px;
+                        "
+                      >
+                        contact
+                      </button>
+                    </div>
+                    <div class="p-2 mt-2">
+                      <p class="poppins-semibold">
+                        download cv
+                        <i class="fa fa-download" aria-hidden="true"></i>
+                      </p>
+                    </div>
+                  </div>
                   <div class="social-icons">
                     <a href="#" title="instagram">
                       <i class="fa fa-instagram" aria-hidden="true"></i>
@@ -156,36 +161,38 @@
                   </div>
                 </div>
               </div>
-              <!-- <img
-                class="card-img-right flex-auto d-none d-md-block"
-                data-src="holder.js/200x250?theme=thumb"
-                alt="Card image cap"
-              /> -->
-              <img
-                style="width: 30%"
-                class="card-img-right flex-auto d-none d-md-block"
-                src="assets/img/img1.jpg"
-                alt="drew-hays"
-              />
-              <div class="d-flex justify-content-center mb-5">
-                <img
-                  style="width: 50%"
-                  class="card-img-right flex-auto d-block d-sm-none"
-                  src="assets/img/img1.jpg"
-                  alt="drew-hays"
-                />
+            </div>
+            <div class="col-md-2 col-xl-3 pt-5 d-none d-xl-block" style="height: 360px;">
+              <div class="card text-center h-100" style="width: 18rem">
+                <img src="assets/img/img1.jpg" class="card-img-top" alt="..." />
+                <div class="card-body">
+                  <h5 class="card-title poppins-bold">
+                    Gerald Ghibran Gunasha
+                  </h5>
+                  <p class="card-text poppins-regular">Fullstack Developer</p>
+                </div>
+              </div>
+            </div>
+            <div
+              class="col-md-4 col-xl-3 pt-5 d-flex justify-content-center mb-5"
+            >
+              <div
+                class="card text-center d-block d-xl-none"
+                style="width: 18rem"
+              >
+                <img src="assets/img/img1.jpg" class="card-img-top" alt="..." />
+                <div class="card-body">
+                  <h5 class="card-title poppins-bold">
+                    Gerald Ghibran Gunasha
+                  </h5>
+                  <p class="card-text poppins-regular">Fullstack Developer</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-
-      <!-- Marketing messaging and featurettes
-      ================================================== -->
-      <!-- Wrap the rest of the page in another container to center all the content. -->
-
       <div class="container marketing">
-        <!-- Three columns of text below the carousel -->
         <div class="row">
           <div class="container card-body-all">
             <div class="card-container d-flex flex-wrap" id="curd-table"></div>
@@ -296,7 +303,6 @@
           <!-- Edit Module End -->
         </div>
       </div>
-    
     </main>
 
     <script
