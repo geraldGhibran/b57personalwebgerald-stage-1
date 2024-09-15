@@ -22,7 +22,6 @@
 .blog-form form input,
 textarea,
 select {
-  width: 100%;
   font-size: 20px;
   font-weight: 400;
   padding: 8px;

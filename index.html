@@ -42,6 +42,21 @@
 
     <!-- Custom styles for this template -->
     <link href="./assets/css/carousel.css" rel="stylesheet" />
+    <style>
+      @media only screen and (max-width: 1280px) {
+        /* only size 'xs' and below */
+        .searchResults {
+          height: 58%;
+        }
+      }
+
+      @media only screen and (max-width: 680px) {
+        /* only size 'xs' and below */
+        .searchResults {
+          height: 100%;
+        }
+      }
+    </style>
   </head>
   <body>
     <header data-bs-theme="dark">
@@ -162,7 +177,10 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-2 col-xl-3 pt-5 d-none d-xl-block" style="height: 360px;">
+            <div
+              class="col-md-2 col-xl-3 pt-5 d-none d-xl-block"
+              style="height: 360px"
+            >
               <div class="card text-center h-100" style="width: 18rem">
                 <img src="assets/img/img1.jpg" class="card-img-top" alt="..." />
                 <div class="card-body">
@@ -177,7 +195,7 @@
               class="col-md-4 col-xl-3 pt-5 d-flex justify-content-center mb-5"
             >
               <div
-                class="card text-center d-block d-xl-none"
+                class="card text-center d-block d-xl-none searchResults"
                 style="width: 18rem"
               >
                 <img src="assets/img/img1.jpg" class="card-img-top" alt="..." />
