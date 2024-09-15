@@ -126,7 +126,8 @@ function addProject(event) {
     image: reader.result,
     createdAt: new Date(),
   };
-  console.log(data);
+  location.href='/index.html'
+
  
   
 
@@ -168,6 +169,7 @@ function renderBlog() {
   }
 
   document.getElementById("contents").innerHTML = html;
+  
 }
 renderBlog();
 

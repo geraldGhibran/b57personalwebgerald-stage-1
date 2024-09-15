@@ -196,8 +196,7 @@ function AddDataProject(event) {
       image: reader.result,
     });
     localStorage.setItem("projectList", JSON.stringify(projectList));
-    location.reload();
-    showData();
+    window.open("index.html",'_self');
   });
 
   document.getElementById("input-project-name").value = "";
@@ -205,7 +204,7 @@ function AddDataProject(event) {
   document.getElementById("input-project-enddate").value = "";
   document.getElementById("input-project-description").value = "";
   document.getElementById("close-btn").click();
-  alert("Data Added Successfully");
+  
   //   }
 }
 
