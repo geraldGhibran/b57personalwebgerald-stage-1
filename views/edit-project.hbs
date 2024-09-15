@@ -42,7 +42,7 @@
       href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="assets/css/style.css" />
+    {{!-- <link rel="stylesheet" href="assets/css/style.css" /> --}}
   </head>
   <body>
     <!-- navbar start -->
@@ -110,8 +110,8 @@
     <div class="blog">
       <div class="blog-form">
         <div class="form-container">
-          <form method="post" action="/project">
-            <h1 class="poppins-bold">ADD MY PROJECT</h1>
+          <form method="post" action="/edit-blog/{{data.id}}">
+            <h1 class="poppins-bold">Edit MY PROJECT</h1>
             <div>
               <div class="form-group">
                 <label for="input-project-name">Project Name</label>
@@ -121,17 +121,18 @@
                   aria-describedby="emailHelp"
                   placeholder="Enter project name"
                   name="projectName"
+                  value="{{data.projectName}}"
                 />
               </div>
             </div>
             <div class="project-date">
               <div class="form-group">
                 <label for="input-project-startdate">Start Date</label>
-                <input type="date" id="input-project-startdate" name="startDate" />
+                <input type="date" id="input-project-startdate" name="startDate" value="{{data.startDate}}" />
               </div>
               <div class="form-group">
                 <label for="input-project-enddate">End Date</label>
-                <input type="date" id="input-project-enddate" name="endDate"/>
+                <input type="date" id="input-project-enddate" name="endDate" value="{{data.endDate}}"/>
               </div>
             </div>
 
@@ -141,7 +142,7 @@
                 class="form-control"
                 id="input-project-description"
                 name="description"
-              ></textarea>
+              >value="{{data.description}}"</textarea>
             </div>
             <div class="technologies-container">
               <div class="technologies-item">
@@ -149,7 +150,7 @@
                   type="checkbox"
                   id="nodejs"
                   name="nodejs"
-                  value="nodejs"
+                  {{!-- value="{{data.technologies[0]}}" --}}
                 />
                 <label for="nodejs"> Node Js</label>
               </div>
@@ -159,7 +160,7 @@
                   type="checkbox"
                   id="nextjs"
                   name="nextjs"
-                  value="nextjs"
+                  {{!-- value="{{data.technologies[3]}}" --}}
                 />
                 <label for="nextjs">Next Js</label>
               </div>
@@ -168,7 +169,7 @@
                   type="checkbox"
                   id="reactjs"
                   name="reactjs"
-                  value="reactjs"
+                  {{!-- value="{{data.technologies[2]}}" --}}
                 />
                 <label for="reactjs">React Js</label>
               </div>
@@ -177,7 +178,7 @@
                   type="checkbox"
                   id="typescript"
                   name="typescript"
-                  value="typescript"
+                  {{!-- value="{{data.technologies[1]}}" --}}
                 />
                 <label for="typescript">Typescript</label>
               </div>
@@ -195,11 +196,12 @@
                   type="text"
                   id="input-project-image"
                   name="image"
+                  value="{{data.image}}"
                 />
               </div>
             </div>
             <div class="button-group">
-              <button type="submit" class="btn submitButton w-100">Add</button>
+              <button type="submit" class="btn submitButton w-100">edit</button>
             </div>
           </form>
         </div>
@@ -219,6 +221,5 @@
       crossorigin="anonymous"
     ></script>
     <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
-    <script src="assets/js/script.js"></script>
   </body>
 </html>

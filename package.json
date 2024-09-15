@@ -1,7 +1,7 @@
 {
-    "name": "b57personalweb",
+    "name": "stage1",
     "version": "1.0.0",
-    "description": "b57personalweb",
+    "description": "personal web dumbways.id",
     "main": "index.js",
     "scripts": {
       "start": "nodemon index.js"
@@ -9,10 +9,18 @@
     "author": "gerald",
     "license": "ISC",
     "dependencies": {
+      "bcrypt": "^5.1.1",
       "express": "^4.19.2",
-      "hbs": "^4.2.0"
+      "express-flash": "^0.0.2",
+      "express-session": "^1.18.0",
+      "hbs": "^4.2.0",
+      "pg": "^8.12.0",
+      "pg-hstore": "^2.3.4",
+      "sequelize": "^6.37.3"
     },
     "devDependencies": {
-      "nodemon": "^3.1.4"
+      "nodemon": "^3.1.4",
+      "sequelize-cli": "^6.6.2"
     }
   }
+  
