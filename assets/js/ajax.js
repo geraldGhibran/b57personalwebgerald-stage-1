@@ -22,12 +22,17 @@ async function getAllTestimonials() {
   );
 
   const testimonialHTML = testimonials.map((testimonial) => {
-    return `<div class="testimonial">
-    <img src="${testimonial.image}" class="profile-testimonial" />
-    <p class="quote">"${testimonial.content}"</p>
-    <p class="author">- ${testimonial.author}</p>
-    <p class="author">${testimonial.rating} <i class="fa-solid fa-star"></i></p>
-</div>`;
+    return `
+    <div class="col-lg-4 col-md-4 col-xl-4 mb-5" style="height: 400px; ">
+    <div class="card text-center h-100" style="width: 18rem">
+    <img src="${testimonial.image}" class="card-img-top" alt="..." />
+    <div class="card-body">
+      <p class="card-title poppins-regular">${testimonial.content}</p>
+      <p class="card-text poppins-regular">- ${testimonial.author}</p>
+      <p class="card-text poppins-regular">${testimonial.rating} <i class="fa-solid fa-star"></i></p>
+    </div>
+    </div>
+    </div>`;
   });
 
   document.getElementById("testimonials").innerHTML = testimonialHTML.join("");

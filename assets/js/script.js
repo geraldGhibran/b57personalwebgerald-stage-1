@@ -403,7 +403,6 @@ function filterProduct(sortvalue) {
 
 function filteredData(sortedProduct) {
   let html = "";
-  console.log("filterData", sortedProduct);
   if (sortedProduct.length === 0) {
     // This Below HTML Code Display when product list's array is Empty.
     html += `<div class="card-body">

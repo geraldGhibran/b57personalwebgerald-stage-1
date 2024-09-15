@@ -71,5 +71,8 @@ body {
   flex-wrap: nowrap;
 }
 
-.flex-container > div {
+.navbar-logo {
+  width: 50px;
+  height: 25px;
+  object-fit: contain;
 }
