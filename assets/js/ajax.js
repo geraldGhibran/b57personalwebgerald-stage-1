@@ -40,7 +40,7 @@ async function getAllTestimonials() {
 
 async function getTestimonialsByRating(rating) {
   const testimonials = await getTestimonialData(
-    "https://api.npoint.io/325670a0ea8fb06fe0df"
+    "https://api.npoint.io/324bca9b24b53c982ad1"
   );
 
   const filteredTestimonials = testimonials.filter((testimonial) => {
@@ -50,12 +50,16 @@ async function getTestimonialsByRating(rating) {
   });
 
   const testimonialHTML = filteredTestimonials.map((testimonial) => {
-    return `<div class="testimonial">
-    <img src="${testimonial.image}" class="profile-testimonial" />
+    return `<div class="col-lg-4 col-md-4 col-xl-4 mb-5" style="height: 450px; ">
+    <div class="card p-5 h-100" style="width: 20rem">
+    <img src="${testimonial.image}" class="card-img-top" />
+    <div class="card-body">
     <p class="quote">"${testimonial.content}"</p>
     <p class="author">- ${testimonial.author}</p>
     <p class="author">${testimonial.rating} <i class="fa-solid fa-star"></i></p>
-</div>`;
+</div>
+ </div>
+    </div>`;
   });
 
   document.getElementById("testimonials").innerHTML = testimonialHTML.join("");

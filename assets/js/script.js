@@ -124,7 +124,7 @@ function getDetail(id) {
   const params = new URLSearchParams({
     id: id,
   });
-  window.location.href = `project-detail.html?${params.toString()}`;
+  window.location.href = `/project-detail?${params.toString()}`;
 }
 
 // Load all data when document or page load
@@ -196,7 +196,7 @@ function AddDataProject(event) {
       image: reader.result,
     });
     localStorage.setItem("projectList", JSON.stringify(projectList));
-    window.open("index.html",'_self');
+    window.open("/index",'_self');
   });
 
   document.getElementById("input-project-name").value = "";

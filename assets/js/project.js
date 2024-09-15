@@ -126,7 +126,7 @@ function addProject(event) {
     image: reader.result,
     createdAt: new Date(),
   };
-  location.href='/index.html'
+  location.href='//index'
 
  
   
