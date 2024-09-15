@@ -18,18 +18,18 @@ function getTestimonialData(url) {
 
 async function getAllTestimonials() {
   const testimonials = await getTestimonialData(
-    "https://api.npoint.io/325670a0ea8fb06fe0df"
+    "https://api.npoint.io/324bca9b24b53c982ad1"
   );
 
   const testimonialHTML = testimonials.map((testimonial) => {
     return `
-    <div class="col-lg-4 col-md-4 col-xl-4 mb-5" style="height: 400px; ">
-    <div class="card text-center h-100" style="width: 18rem">
+    <div class="col-lg-4 col-md-4 col-xl-4 mb-5" style="height: 450px; ">
+    <div class="card p-5 h-100" style="width: 20rem">
     <img src="${testimonial.image}" class="card-img-top" alt="..." />
     <div class="card-body">
-      <p class="card-title poppins-regular">${testimonial.content}</p>
-      <p class="card-text poppins-regular">- ${testimonial.author}</p>
-      <p class="card-text poppins-regular">${testimonial.rating} <i class="fa-solid fa-star"></i></p>
+      <p class="card-title poppins-regular text-start">"${testimonial.content}"</p>
+      <p class="card-text poppins-bold text-end">- ${testimonial.author}</p>
+      <p class="card-text poppins-bold text-end">${testimonial.rating} <i class="fa-solid fa-star"></i></p>
     </div>
     </div>
     </div>`;
@@ -93,10 +93,10 @@ const buttonRatings = [
 function showButtonRatings() {
   const buttonRatingsHTML = buttonRatings.map((buttonRating) => {
     if (buttonRating.name === "All") {
-      return `<button onclick="getAllTestimonials()" class="rating-btn">${buttonRating.name}</button>`;
+      return `<button onclick="getAllTestimonials()" class="p-2 rating-btn bg-dark text-white m-2">${buttonRating.name}</button>`;
     } else {
-      return `<button onclick="getTestimonialsByRating(${buttonRating.rating})" class="rating-btn">
-            ${buttonRating.name} <i class="fa-solid fa-star"></i>
+      return `<button onclick="getTestimonialsByRating(${buttonRating.rating})" class=" p-2 rating-btn bg-dark text-white m-2">
+            ${buttonRating.name} <i class="fa-solid fa-star text-white"></i>
           </button>`;
     }
   });
