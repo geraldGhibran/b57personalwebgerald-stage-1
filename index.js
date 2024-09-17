@@ -33,6 +33,7 @@ app.get("/add-project", addProjectView);
 app.post("/project", addProject);
 app.get("/delete-project/:id", deleteProject);
 app.get("/edit-project/:id", editProjectView);
+app.get("/edit-project/:id", convertDate);
 app.post("/edit-project/:id", editProject);
 app.get("/contact", contact);
 app.get("/testimonial", testimonial);
@@ -43,6 +44,7 @@ app.get("/register", registerView);
 
 app.post("/register", register);
 app.post("/login", login);
+app.get("/logout", logout);
 
 function loginView(req, res) {
   res.render("login");
@@ -85,6 +87,11 @@ async function login(req, res) {
 
 function registerView(req, res) {
   res.render("register");
+}
+
+function logout(req, res) {
+  req.session.destroy();
+  res.redirect("/");
 }
 
 async function register(req, res) {
@@ -142,6 +149,7 @@ async function deleteProject(req, res) {
 }
 
 async function addProject(req, res) {
+  
   const {
     projectName,
     description,
@@ -159,7 +167,7 @@ async function addProject(req, res) {
     endDate: endDate,
     description: description,
     technologies: [nodejs, typescript, reactjs, nextjs],
-    createdDate: new Date(),
+    createdAt: "2024-07-15T16:11:25.556Z",
     image: image,
   });
 
@@ -177,12 +185,31 @@ async function editProjectView(req, res) {
 
   if (!result) return res.render("not-found");
 
-  res.render("edit-project", { data: result });
+  res.render("edit-project", {
+    data: result,
+    startDate: convertDate(result.startDate),
+    endDate: convertDate(result.endDate),
+    typescript: result.technologies.indexOf("typescript") !== -1,
+    nodejs: result.technologies.indexOf("nodejs") !== -1,
+    nextjs: result.technologies.indexOf("nextjs") !== -1,
+    reactjs: result.technologies.indexOf("reactjs") !== -1,
+  });
+
 }
 
 async function editProject(req, res) {
   const { id } = req.params;
-  const { title, content } = req.body;
+  const {
+    projectName,
+    description,
+    startDate,
+    endDate,
+    image,
+    nodejs,
+    typescript,
+    reactjs,
+    nextjs,
+  } = req.body;
 
   const project = await projectModel.findOne({
     where: {
@@ -192,16 +219,22 @@ async function editProject(req, res) {
 
   if (!project) return res.render("not-found");
 
-  project.title = title;
-  project.content = content;
+  project.projectName = projectName;
+  project.description = description;
+  project.startDate = startDate;
+  project.endDate = endDate;
+  project.image = image;
+
+  project.technologies = [nodejs, typescript, reactjs, nextjs];
 
   await project.save();
 
-  res.redirect("/project");
+  res.redirect("/");
 }
 
 function addProjectView(req, res) {
-  res.render("add-project");
+  const user = req.session.user;
+  res.render("add-project", { user });
 }
 
 function contact(req, res) {
@@ -209,10 +242,12 @@ function contact(req, res) {
 }
 
 function testimonial(req, res) {
-  res.render("testimonial");
+  const user = req.session.user;
+  res.render("testimonial", { user });
 }
 
 async function projectDetail(req, res) {
+  const user = req.session.user;
   const { id } = req.params;
   const result = await projectModel.findOne({
     where: {
@@ -220,10 +255,52 @@ async function projectDetail(req, res) {
     },
   });
 
-  console.log("detail", result);
+  
+  const inputDateString = result.createdAt;
+
+  const inputDate = new Date(inputDateString);
+
+  const currentDate = new Date();
+
+  const diffYears = currentDate.getFullYear() - inputDate.getFullYear();
+  const diffMonths =
+    currentDate.getMonth() - inputDate.getMonth() + diffYears * 12;
+
+  const dayDifference = currentDate.getDate() - inputDate.getDate();
+  const totalMonthDifference =
+    dayDifference < 0 ? diffMonths - 1 : diffMonths;
 
   if (!result) return res.render("not-found");
-  res.render("project-detail", { data: result });
+  res.render("project-detail", {
+    data: result,
+    startDate: convertDate(result.startDate),
+    endDate: convertDate(result.endDate),
+    createdDate: totalMonthDifference + " months ago",
+    nodejs: result.technologies.includes("nodejs") ? "nodejs" : "",
+    typescript: result.technologies.includes("typescript") ? "typescript" : "",
+    reactjs: result.technologies.includes("reactjs") ? "reactjs" : "",
+    nextjs: result.technologies.includes("nextjs") ? "nextjs" : "",
+    user
+  });
+}
+
+function convertDate(dates) {
+  // Original date string
+  const dateString = dates;
+
+  // Create a new Date object
+  const date = new Date(dateString);
+
+  // Extract the year, month, and day
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are zero-based
+  const day = String(date.getDate()).padStart(2, "0");
+
+  // Format the date as yyyy-MM-dd
+  const formattedDate = `${year}-${month}-${day}`;
+
+
+  return formattedDate;
 }
 
 app.listen(port, () => {
