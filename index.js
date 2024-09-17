@@ -22,8 +22,8 @@ app.use(
     saveUninitialized: false,
     cookie: {
       maxAge: 1000 * 60 * 60 * 24,
-      httpOnly: true, // helps prevent XSS attacks
-      secure: true, // cookies sent only over HTTPS in production
+      httpOnly: false, // helps prevent XSS attacks
+      secure: false, // cookies sent only over HTTPS in production
       sameSite: 'Lax', // or 'Strict', depending on your needs
     },
   })
