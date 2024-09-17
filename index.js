@@ -3,7 +3,7 @@ const app = express();
 const port = 5000;
 const path = require("path");
 const bcrypt = require("bcrypt");
-const session = require("express-session");
+const session = require("cookie-session");
 const flash = require("express-flash");
 
 const projectModel = require("./models").project;
@@ -18,13 +18,15 @@ app.use(
   session({
     name: "my-session",
     secret: "ewVsqWOyeb",
+    saveUninitialized: true,
+    rolling: true,
     resave: false,
-    saveUninitialized: false,
+    proxy: true,
     cookie: {
       maxAge: 1000 * 60 * 60 * 24,
       httpOnly: false, // helps prevent XSS attacks
       secure: false, // cookies sent only over HTTPS in production
-      sameSite: 'Lax', // or 'Strict', depending on your needs
+      sameSite: "None", // or 'Strict', depending on your needs
     },
   })
 );
