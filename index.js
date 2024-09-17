@@ -18,13 +18,12 @@ app.use(
   session({
     name: "my-session",
     secret: "ewVsqWOyeb",
-    resave: true,
-    saveUninitialized: true,
+    resave: false,
+    saveUninitialized: false,
     cookie: {
-      maxAge: null,
-      httpOnly: true,
-      secure: true,
-      sameSite: "none",
+      maxAge: 1000 * 60 * 60 * 24,
+      sameSite: "lax", // or 'none' if you need cross-site cookies
+      secure: true, // true if in production
     },
   })
 );
@@ -152,7 +151,6 @@ async function deleteProject(req, res) {
 }
 
 async function addProject(req, res) {
-  
   const {
     projectName,
     description,
@@ -197,7 +195,6 @@ async function editProjectView(req, res) {
     nextjs: result.technologies.indexOf("nextjs") !== -1,
     reactjs: result.technologies.indexOf("reactjs") !== -1,
   });
-
 }
 
 async function editProject(req, res) {
@@ -258,7 +255,6 @@ async function projectDetail(req, res) {
     },
   });
 
-  
   const inputDateString = result.createdAt;
 
   const inputDate = new Date(inputDateString);
@@ -270,8 +266,7 @@ async function projectDetail(req, res) {
     currentDate.getMonth() - inputDate.getMonth() + diffYears * 12;
 
   const dayDifference = currentDate.getDate() - inputDate.getDate();
-  const totalMonthDifference =
-    dayDifference < 0 ? diffMonths - 1 : diffMonths;
+  const totalMonthDifference = dayDifference < 0 ? diffMonths - 1 : diffMonths;
 
   if (!result) return res.render("not-found");
   res.render("project-detail", {
@@ -283,7 +278,7 @@ async function projectDetail(req, res) {
     typescript: result.technologies.includes("typescript") ? "typescript" : "",
     reactjs: result.technologies.includes("reactjs") ? "reactjs" : "",
     nextjs: result.technologies.includes("nextjs") ? "nextjs" : "",
-    user
+    user,
   });
 }
 
@@ -301,7 +296,6 @@ function convertDate(dates) {
 
   // Format the date as yyyy-MM-dd
   const formattedDate = `${year}-${month}-${day}`;
-
 
   return formattedDate;
 }
