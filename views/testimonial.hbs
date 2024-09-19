@@ -63,7 +63,7 @@
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav me-auto mb-2 mb-md-0">
               <li class="nav-item active">
-                <a class="nav-link text-dark poppins-regular" href="/">Home
+                <a class="nav-link text-dark poppins-bold" href="/">Home
                   <span class="sr-only">(current)</span></a>
               </li>
               <li class="nav-item">
@@ -74,56 +74,57 @@
               </li>
               <li class="nav-item">
                 <a
-                  class="nav-link text-dark poppins-bold"
+                  class="nav-link text-dark poppins-regular"
                   href="/testimonial"
                 >Testimonial</a>
               </li>
             </ul>
-          </div>
-          <div>
-            <ul class="navbar-nav me-auto mb-2 mb-md-0">
-              {{#if user}}
-                <li class="nav-item">
-                  <p
-                    class="nav-link text-dark poppins-regular mt-2"
-                    href="/testimonial"
-                  >Welcome back!, <strong>{{user.name}}</strong></p>
-                </li>
+            <div>
+              <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                {{#if user}}
+                  {{!-- <h1>Hello, {{user.name}}</h1> --}}
+                  <li class="nav-item">
+                    <p
+                      class="nav-link text-dark poppins-regular mt-2"
+                      href="/testimonial"
+                    >Welcome back!, <strong>{{user.name}}</strong></p>
+                  </li>
+                  <li class="nav-item m-2">
+                    <a
+                      href="/logout"
+                      class="btn btn-danger poppins-regular p-2"
+                    >Logout</a>
+
+                  </li>
+                {{else}}
+                  <li class="nav-item m-2">
+                    <a
+                      href="/register"
+                      class="btn btn-dark poppins-regular p-2"
+                    >Register</a>
+
+                  </li>
+                  <li class="nav-item m-2">
+                    <a
+                      href="/login"
+                      class="btn btn-dark poppins-regular p-2"
+                    >Login</a>
+                  </li>
+
+                {{/if}}
                 <li class="nav-item m-2">
                   <a
-                    href="/logout"
-                    class="btn btn-danger poppins-regular p-2"
-                  >Logout</a>
-
-                </li>
-              {{else}}
-                <li class="nav-item m-2">
-                  <a
-                    href="/register"
-                    class="btn btn-dark poppins-regular p-2"
-                  >Register</a>
-
-                </li>
-                <li class="nav-item m-2">
-                  <a
-                    href="/login"
-                    class="btn btn-dark poppins-regular p-2"
-                  >Login</a>
+                    class="btn btn-dark poppins-regular"
+                    href="/contact"
+                    style="padding: 10px"
+                  >
+                    Contact Me
+                  </a>
                 </li>
 
-              {{/if}}
-              <li class="nav-item m-2">
-                <a
-                  class="btn btn-dark poppins-regular"
-                  href="/contact"
-                  style="padding: 10px"
-                >
-                  Contact Me
-                </a>
-              </li>
+              </ul>
 
-            </ul>
-
+            </div>
           </div>
         </div>
       </nav>
@@ -152,18 +153,12 @@
       integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
       crossorigin="anonymous"
     ></script>
-    <script>
-      window.jQuery || document.write( '<script
-      src="./assets/js/vendor/jquery-slim.min.js"><\/script>' );
-    </script>
     <script src="./assets/js/vendor/popper.min.js"></script>
-    <!-- <script src="./assets/js/bootstrap.min.js"></script> -->
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
       crossorigin="anonymous"
     ></script>
-    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
     <script src="./assets/js/vendor/holder.min.js"></script>
     <script
       src="https://kit.fontawesome.com/66aa7c98b3.js"

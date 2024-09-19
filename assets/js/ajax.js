@@ -23,7 +23,7 @@ async function getAllTestimonials() {
 
   const testimonialHTML = testimonials.map((testimonial) => {
     return `
-    <div class="col-lg-4 col-md-4 col-xl-4 mb-5" style="height: 450px; ">
+    <div class="col-lg-4 col-md-4 col-xl-4 mb-5 col-sm-2" style="height: 450px; ">
     <div class="card p-5 h-100" style="width: 20rem">
     <img src="${testimonial.image}" class="card-img-top" alt="..." />
     <div class="card-body">
@@ -50,7 +50,7 @@ async function getTestimonialsByRating(rating) {
   });
 
   const testimonialHTML = filteredTestimonials.map((testimonial) => {
-    return `<div class="col-lg-4 col-md-4 col-xl-4 mb-5" style="height: 450px; ">
+    return `<div class="col-lg-4 col-md-4 col-xl-4 mb-5 col-sm-2" style="height: 450px; ">
     <div class="card p-5 h-100" style="width: 20rem">
     <img src="${testimonial.image}" class="card-img-top" />
     <div class="card-body">

@@ -42,7 +42,7 @@
   </head>
   <body>
     <!-- navbar start -->
-    <header data-bs-theme="dark">
+     <header data-bs-theme="dark">
       <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-white">
         <div class="container-fluid">
           <img
@@ -67,15 +67,14 @@
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav me-auto mb-2 mb-md-0">
               <li class="nav-item active">
-                <a class="nav-link text-dark poppins-regular" href="/">Home
-                </a>
-                  
+                <a class="nav-link text-dark poppins-bold" href="/">Home
+                  <span class="sr-only">(current)</span></a>
               </li>
               <li class="nav-item">
                 <a
-                  class="nav-link text-dark poppins-bold"
+                  class="nav-link text-dark poppins-regular"
                   href="/project"
-                >Add Project <span class="sr-only">(current)</span></a></a>
+                >Add Project</a>
               </li>
               <li class="nav-item">
                 <a
@@ -84,11 +83,11 @@
                 >Testimonial</a>
               </li>
             </ul>
-          </div>
-           <div>
+            <div>
               <ul class="navbar-nav me-auto mb-2 mb-md-0">
                 {{#if user}}
-                 <li class="nav-item">
+                  {{!-- <h1>Hello, {{user.name}}</h1> --}}
+                  <li class="nav-item">
                     <p
                       class="nav-link text-dark poppins-regular mt-2"
                       href="/testimonial"
@@ -130,13 +129,14 @@
               </ul>
 
             </div>
+          </div>
         </div>
       </nav>
     </header>
 
     <div class="jumbotron p-3 p-md-5 text-white rounded"></div>
 
-    <div class="blog">
+    <div class="blog container">
       <div class="blog-form">
         <div class="form-container">
           {{#if user}}

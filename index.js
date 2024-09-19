@@ -5,6 +5,9 @@ const path = require("path");
 const bcrypt = require("bcrypt");
 const session = require("cookie-session");
 const flash = require("express-flash");
+const { Sequelize, QueryTypes } = require("sequelize");
+const config = require("./config/config.json");
+const sequelize = new Sequelize(config.development);
 
 const projectModel = require("./models").project;
 const userModel = require("./models").user;
@@ -95,7 +98,7 @@ function registerView(req, res) {
 }
 
 function logout(req, res) {
-  req.session.destroy();
+  req.session = null;
   res.redirect("/");
 }
 
@@ -122,14 +125,34 @@ async function register(req, res) {
 
 async function home(req, res) {
   const user = req.session.user;
-  const result = await projectModel.findAll();
+  const result = await projectModel.findAll({
+    include: [
+      {
+        model: userModel,
+      },
+    ],
+  });
+  console.log("Datanya wooi =================>",result);
+
 
   res.render("index", { data: result, user });
 }
 
 async function project(req, res) {
-  const result = await projectModel.findAll();
+  // const result = await projectModel.findAll({
+  //   include: [
+  //     {
+  //       model: userModel,
+  //     },
+  //   ],
+  // });
+  //   const query = `SELECT public.projects.*, public.users.name AS username FROM public.projects INNER JOIN public.users
+  // ON public.projects."userId" = public.users.id;`;
+  // const result = await sequelize.query(query, { type: QueryTypes.SELECT });
+
+   const result = await projectModel.findAll();
   const user = req.session.user;
+
 
   res.render("project", { data: result, user });
 }
@@ -154,6 +177,7 @@ async function deleteProject(req, res) {
 }
 
 async function addProject(req, res) {
+  const user = req.session.user;
   const {
     projectName,
     description,
@@ -173,13 +197,19 @@ async function addProject(req, res) {
     technologies: [nodejs, typescript, reactjs, nextjs],
     createdAt: "2024-07-15T16:11:25.556Z",
     image: image,
+    userId: user.id,
   });
+
+  if (!user) {
+    return res.redirect("/login");
+  }
 
   res.redirect("/");
 }
 
 async function editProjectView(req, res) {
   const { id } = req.params;
+  const user = req.session.user;
 
   const result = await projectModel.findOne({
     where: {
@@ -198,6 +228,10 @@ async function editProjectView(req, res) {
     nextjs: result.technologies.indexOf("nextjs") !== -1,
     reactjs: result.technologies.indexOf("reactjs") !== -1,
   });
+
+  if (!user) {
+    return res.redirect("/login");
+  }
 }
 
 async function editProject(req, res) {
