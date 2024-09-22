@@ -13,13 +13,21 @@ module.exports = {
         type: Sequelize.STRING
       },
       description: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT,
+        allowNull: false,
       },
       technologies: {
         type: Sequelize.ARRAY(Sequelize.STRING)
       },
       image: {
+        type: Sequelize.TEXT
+      },
+      imageId: {
         type: Sequelize.STRING
+      },
+      author: {
+        allowNull: false,
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,

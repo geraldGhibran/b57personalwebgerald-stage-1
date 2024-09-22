@@ -86,7 +86,6 @@
             <div>
               <ul class="navbar-nav me-auto mb-2 mb-md-0">
                 {{#if user}}
-                  {{!-- <h1>Hello, {{user.name}}</h1> --}}
                   <li class="nav-item">
                     <p
                       class="nav-link text-dark poppins-regular mt-2"
@@ -140,7 +139,7 @@
       <div class="blog-form">
         <div class="form-container">
           {{#if user}}
-          <form method="post" action="/project">
+          <form method="post" action="/project" enctype="multipart/form-data">
             <h1 class="poppins-bold">ADD MY PROJECT</h1>
             <div>
               <div class="form-group">
@@ -226,7 +225,7 @@
                 <label>Uploaded Image</label>
               <div class="form-group">
                 <img
-                  id="previewImage"
+                   id="blah"
                   src=""
                   alt="Please select Image"
                   class="img-thumbnail"
@@ -234,9 +233,6 @@
                 />
               </div>
             </div>
-            
-
-
             <div>
               <div class="input-blog-image-group">
                 <label for="formFile" class="form-label">
@@ -245,8 +241,8 @@
                 </label>
                 <input
                   class="form-control"
-                  type="text"
-                  id="imageURL"
+                  type="file"
+                  id="imgInp"
                   oninput="updateImage()"
                   name="image"
                 />
@@ -287,6 +283,12 @@
       function updateImage() { // Get the value from the input field var
       imageUrl = document.getElementById('imageURL').value; // Set the image URL
       document.getElementById('previewImage').src = imageUrl; }
+            imgInp.onchange = evt => {
+        const [file] = imgInp.files
+        if (file) {
+          blah.src = URL.createObjectURL(file)
+        }
+      }
     </script>
 
     <script

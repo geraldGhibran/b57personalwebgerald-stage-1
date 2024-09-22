@@ -125,7 +125,7 @@
     <div class="blog container">
         <div class="blog-form">
             <div class="form-container">
-                <form method="post" action="/edit-project/{{data.id}}">
+                <form method="post" action="/edit-project/{{data.id}}/imageId/{{data.imageId}}" enctype="multipart/form-data">
                     <h1 class="poppins-bold">EDIT MY PROJECT</h1>
                     <div>
                         <div class="form-group">
@@ -175,18 +175,33 @@
                     </div>
 
                     <div>
-                        <div class="input-blog-image-group">
-                            <label>Upload Image</label>
-                            <img id="previewImage" src="" alt="Please select Image" class="img-thumbnail"
-                                style="width: 200px;" />
-                            <label for="formFile" class="form-label">
-                                <p>Attach URL Image</p>
-                                <i class="fa-solid fa-paperclip"></i>
-                            </label>
-                            <input class="form-control" type="text" id="imageURL" onloadeddata="updateImage()"
-                                oninput="updateImage()" onclick="updateImage()" name="image" value="{{data.image}}" />
-
+                        <div>
+                          <label>Uploaded Image</label>
+                        <div class="form-group">
+                          <img
+                            id="blah"
+                            src=""
+                            alt="Please select Image"
+                            class="img-thumbnail"
+                            style="width: 200px;"
+                          />
                         </div>
+                      </div>
+                      <div>
+                        <div class="input-blog-image-group">
+                          <label for="formFile" class="form-label">
+                            <p>Attach URL Image</p>
+                            <i class="fa-solid fa-paperclip"></i>
+                          </label>
+                          <input
+                            class="form-control"
+                            type="file"
+                            id="imgInp"
+                            name="image"
+                            value="{{data.image}}"
+                          />
+                        </div>
+                      </div>
                     </div>
                     <div class="d-flex justify-content-end"> 
                         <button type="submit" class="btn btn-dark w-25">
@@ -200,14 +215,12 @@
 
     <!-- Add Module End -->
     <script>
-        function updateImage() { // Get the value from the input field var
-            imageUrl = document.getElementById('imageURL').value; // Set the image URL
-            document.getElementById('previewImage').src = imageUrl;
+         imgInp.onchange = evt => {
+        const [file] = imgInp.files
+        if (file) {
+          blah.src = URL.createObjectURL(file)
         }
-
-        document.addEventListener('DOMContentLoaded', function () {
-            updateImage()
-        });
+      }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"

@@ -6,8 +6,16 @@ const bcrypt = require("bcrypt");
 const session = require("cookie-session");
 const flash = require("express-flash");
 const { Sequelize, QueryTypes } = require("sequelize");
+const admin = require("firebase-admin");
 const config = require("./config/config.json");
 const sequelize = new Sequelize(config.development);
+
+const multer = require("multer");
+const serviceAccount = require("./assets/js/service-account");
+
+const upload = multer({ storage: multer.memoryStorage() });
+
+require("dotenv").config();
 
 const projectModel = require("./models").project;
 const userModel = require("./models").user;
@@ -16,6 +24,7 @@ app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "./views"));
 
 app.use("/assets", express.static(path.join(__dirname, "./assets")));
+app.use("/uploads", express.static(path.join(__dirname, "./uploads")));
 app.use(express.urlencoded({ extended: false }));
 app.use(
   session({
@@ -27,9 +36,9 @@ app.use(
     proxy: true,
     cookie: {
       maxAge: 1000 * 60 * 60 * 24,
-      httpOnly: false, // helps prevent XSS attacks
-      secure: false, // cookies sent only over HTTPS in production
-      sameSite: "None", // or 'Strict', depending on your needs
+      httpOnly: false, 
+      secure: false, 
+      sameSite: "None",
     },
   })
 );
@@ -38,11 +47,15 @@ app.use(flash());
 app.get("/", home);
 app.get("/project", project);
 app.get("/add-project", addProjectView);
-app.post("/project", addProject);
-app.get("/delete-project/:id", deleteProject);
+app.post("/project", upload.single("image"), addProject);
+app.get("/delete-project/:id/imageId/:imageId", deleteProject);
 app.get("/edit-project/:id", editProjectView);
 app.get("/edit-project/:id", convertDate);
-app.post("/edit-project/:id", editProject);
+app.post(
+  "/edit-project/:id/imageId/:imageId",
+  upload.single("image"),
+  editProject
+);
 app.get("/contact", contact);
 app.get("/testimonial", testimonial);
 app.get("/project-detail/:id", projectDetail);
@@ -54,6 +67,19 @@ app.post("/register", register);
 app.post("/login", login);
 app.get("/logout", logout);
 
+let {
+  storageBucket
+} = process.env;
+
+
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  storageBucket: storageBucket,
+});
+
+const bucket = admin.storage().bucket();
+
 function loginView(req, res) {
   res.render("login");
 }
@@ -62,7 +88,6 @@ async function login(req, res) {
   try {
     const { email, password } = req.body;
 
-    // cek email user apakah ada di database
     const user = await userModel.findOne({
       where: {
         email: email,
@@ -74,7 +99,6 @@ async function login(req, res) {
       return res.redirect("/login");
     }
 
-    // cek password apakah valid dengan password yang sudah di hash
     const isValidPassword = await bcrypt.compare(password, user.password);
 
     if (!isValidPassword) {
@@ -132,33 +156,19 @@ async function home(req, res) {
       },
     ],
   });
-  console.log("Datanya wooi =================>",result);
-
 
   res.render("index", { data: result, user });
 }
 
 async function project(req, res) {
-  // const result = await projectModel.findAll({
-  //   include: [
-  //     {
-  //       model: userModel,
-  //     },
-  //   ],
-  // });
-  //   const query = `SELECT public.projects.*, public.users.name AS username FROM public.projects INNER JOIN public.users
-  // ON public.projects."userId" = public.users.id;`;
-  // const result = await sequelize.query(query, { type: QueryTypes.SELECT });
-
-   const result = await projectModel.findAll();
+  const result = await projectModel.findAll();
   const user = req.session.user;
-
 
   res.render("project", { data: result, user });
 }
 
 async function deleteProject(req, res) {
-  const { id } = req.params;
+  const { id, imageId } = req.params;
 
   let result = await projectModel.findOne({
     where: {
@@ -173,38 +183,73 @@ async function deleteProject(req, res) {
       id: id,
     },
   });
+
+  bucket.file(imageId).delete();
   res.redirect("/");
 }
 
+const giveCurrentDateTime = () => {
+  const today = new Date();
+  const date =
+    today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+  const time =
+    today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  const dateTime = date + " " + time;
+  return dateTime;
+};
+
 async function addProject(req, res) {
+  const imagePath = req.file.path;
   const user = req.session.user;
-  const {
-    projectName,
-    description,
-    startDate,
-    endDate,
-    image,
-    nodejs,
-    typescript,
-    reactjs,
-    nextjs,
-  } = req.body;
-  await projectModel.create({
-    projectName: projectName,
-    startDate: startDate,
-    endDate: endDate,
-    description: description,
-    technologies: [nodejs, typescript, reactjs, nextjs],
-    createdAt: "2024-07-15T16:11:25.556Z",
-    image: image,
-    userId: user.id,
-  });
+  const file = req.file;
+  const dateTime = giveCurrentDateTime();
 
   if (!user) {
     return res.redirect("/login");
   }
 
-  res.redirect("/");
+  if (!file) {
+    return res.status(400).send("No file uploaded.");
+  }
+
+  try {
+    const fileRef = bucket.file(file.originalname);
+    const [url] = await fileRef.getSignedUrl({
+      action: "read",
+      expires: "03-17-2025",
+    });
+    await fileRef.save(file.buffer, {
+      metadata: { contentType: file.mimetype },
+      resumable: false,
+    });
+    const {
+      projectName,
+      description,
+      startDate,
+      endDate,
+      nodejs,
+      typescript,
+      reactjs,
+      nextjs,
+    } = req.body;
+    await projectModel.create({
+      projectName: projectName,
+      startDate: startDate,
+      endDate: endDate,
+      description: description,
+      technologies: [nodejs, typescript, reactjs, nextjs],
+      createdAt: "2024-07-15T16:11:25.556Z",
+      image: url,
+      imageId: file.originalname,
+      userId: user.id,
+      author: user.name,
+    });
+
+    res.redirect("/");
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(`Error: ${error.message}`);
+  }
 }
 
 async function editProjectView(req, res) {
@@ -216,6 +261,10 @@ async function editProjectView(req, res) {
       id: id,
     },
   });
+
+  if (!user) {
+    return res.redirect("/login");
+  }
 
   if (!result) return res.render("not-found");
 
@@ -235,7 +284,9 @@ async function editProjectView(req, res) {
 }
 
 async function editProject(req, res) {
-  const { id } = req.params;
+  const { id, imageId } = req.params;
+  const file = req.file;
+
   const {
     projectName,
     description,
@@ -248,25 +299,39 @@ async function editProject(req, res) {
     nextjs,
   } = req.body;
 
-  const project = await projectModel.findOne({
-    where: {
-      id: id,
-    },
-  });
+  try {
+    const fileRef = bucket.file(imageId);
+    const [url] = await fileRef.getSignedUrl({
+      action: "read",
+      expires: "03-17-2025",
+    });
+    await fileRef.save(file.buffer, {
+      metadata: { contentType: file.mimetype },
+      resumable: false,
+    });
+    const project = await projectModel.findOne({
+      where: {
+        id: id,
+      },
+    });
 
-  if (!project) return res.render("not-found");
+    if (!project) return res.render("not-found");
 
-  project.projectName = projectName;
-  project.description = description;
-  project.startDate = startDate;
-  project.endDate = endDate;
-  project.image = image;
+    project.projectName = projectName;
+    project.description = description;
+    project.startDate = startDate;
+    project.endDate = endDate;
+    project.image = url;
+    project.imageId = file.originalname;
 
-  project.technologies = [nodejs, typescript, reactjs, nextjs];
+    project.technologies = [nodejs, typescript, reactjs, nextjs];
 
-  await project.save();
+    await project.save();
 
-  res.redirect("/");
+    res.redirect("/");
+  } catch (error) {
+    res.status(500).send(`Error: ${error.message}`);
+  }
 }
 
 function addProjectView(req, res) {

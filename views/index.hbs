@@ -267,6 +267,10 @@
                         <p class="list-group-item h-10">
                           {{description}}
                         </p>
+                        <p class="list-group-item h-10">
+                          {{author}}
+                        </p>
+                        
                       </ul>
 
                       {{#if ../user}}
@@ -276,7 +280,7 @@
                             class="btn btn-dark mx-2"
                           >Edit Post</a>
                           <a
-                            href="/delete-project/{{id}}"
+                            href="/delete-project/{{id}}/imageId/{{imageId}}"
                             class="btn btn-dark"
                           >Delete Post</a>
                         </div>
