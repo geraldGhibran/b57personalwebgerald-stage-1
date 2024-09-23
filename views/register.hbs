@@ -1,7 +1,7 @@
 <html>
 
   <head>
-    <title>Register</title>
+    <title>Login</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -24,10 +24,11 @@
     <link rel="stylesheet" href="../assets/css/index.css" />
     <link rel="stylesheet" href="../assets/css/nav.css" />
     <link rel="stylesheet" href="../assets/css/style.css" />
+
   </head>
 
   <body>
-    <header data-bs-theme="dark">
+    {{!-- <header data-bs-theme="dark">
       <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-white">
         <div class="container-fluid">
           <img
@@ -71,7 +72,6 @@
             <div>
               <ul class="navbar-nav me-auto mb-2 mb-md-0">
                 {{#if user}}
-                  {{!-- <h1>Hello, {{user.name}}</h1> --}}
                   <li class="nav-item">
                     <p
                       class="nav-link text-dark poppins-regular mt-2"
@@ -117,11 +117,10 @@
           </div>
         </div>
       </nav>
-    </header>
-    <div class="jumbotron p-3 p-md-5 text-white rounded"></div>
+    </header> --}}
 
-    <div class="container mt-2">
-      <div class="row">
+    <section class="vh-100">
+      <div class="container-fluid h-custom">
         {{#if messages.error}}
           <div class="alert alert-danger" role="alert">
             {{messages.error}}
@@ -132,24 +131,99 @@
             {{messages.success}}
           </div>
         {{/if}}
-
-      </div>
-    </div>
-
-    <div class="container d-flex justify-content-center">
-      <div class="w-50">
-        <h3 class="text-center mt-5">REGISTER</h3>
-        <form action="/register" method="POST">
-          <div class="mb-3">
-            <label for="username" class="form-label">Name</label>
-            <input
-              type="text"
-              name="name"
-              class="form-control"
-              id="username"
-              aria-describedby="emailHelp"
+        <div class="row d-flex justify-content-center align-items-center h-100">
+          <div class="col-md-9 col-lg-6 col-xl-5">
+            <img
+              src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+              class="img-fluid"
+              alt="Sample image"
             />
           </div>
+          <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+            <form action="/register" method="POST">
+              <div
+                class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start"
+              >
+                <p class="lead fw-normal mb-0 me-3">Sign up</p>
+              </div>
+
+              <div class="divider d-flex align-items-center my-4">
+                <p class="text-center fw-bold mx-3 mb-0">New user</p>
+              </div>
+
+              <!-- Email input -->
+              <div data-mdb-input-init class="form-outline mb-4">
+                <input
+                  type="text"
+                  id="name"
+                  class="form-control form-control-lg"
+                  name="name"
+                  placeholder="Enter a name"
+                />
+                <label class="form-label" for="form3Example3">Name</label>
+              </div>
+
+              <div data-mdb-input-init class="form-outline mb-4">
+                <input
+                  type="email"
+                  id="email"
+                  class="form-control form-control-lg"
+                  name="email"
+                  placeholder="Enter a valid email address"
+                />
+                <label class="form-label" for="form3Example3">Email address</label>
+              </div>
+
+              <!-- Password input -->
+              <div data-mdb-input-init class="form-outline mb-3">
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  class="form-control form-control-lg"
+                  placeholder="Enter password"
+                />
+                <label class="form-label" for="form3Example4">Password</label>
+              </div>
+
+              <div class="text-center text-lg-start mt-4 pt-2">
+                <button
+                  type="submit"
+                  class="btn btn-dark mt-3 px-5"
+                >Submit</button>
+                <p class="small fw-bold mt-2 pt-1 mb-0">Already have an account?
+                  <a href="/login" class="link-danger">login</a></p>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      </div>
+      <div
+        class="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-4 px-4 px-xl-5 bg-primary"
+      >
+        <!-- Copyright -->
+        <div class="text-white mb-3 mb-md-0">
+          Copyright © 2024. All rights reserved.
+        </div>
+        <!-- Copyright -->
+      </div>
+    </section>
+
+    {{!-- <div class="container d-flex justify-content-center">
+      <div class="w-50">
+        {{#if messages.error}}
+          <div class="alert alert-danger" role="alert">
+            {{messages.error}}
+          </div>
+        {{/if}}
+        {{#if messages.success}}
+          <div class="alert alert-success" role="alert">
+            {{messages.success}}
+          </div>
+        {{/if}}
+        <h3 class="text-center mt-5">LOGIN</h3>
+        <form action="/login" method="POST">
           <div class="mb-3">
             <label for="email" class="form-label">Email</label>
             <input
@@ -172,7 +246,7 @@
           <button type="submit" class="btn btn-dark mt-3 px-5">Submit</button>
         </form>
       </div>
-    </div>
+    </div> --}}
 
     <script
       src="https://code.jquery.com/jquery-3.2.1.slim.min.js"

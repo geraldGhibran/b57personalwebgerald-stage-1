@@ -5,10 +5,8 @@ const path = require("path");
 const bcrypt = require("bcrypt");
 const session = require("cookie-session");
 const flash = require("express-flash");
-const { Sequelize, QueryTypes } = require("sequelize");
 const admin = require("firebase-admin");
-const config = require("./config/config.json");
-const sequelize = new Sequelize(config.development);
+const { Sequelize, DataTypes, Op } = require("sequelize");
 
 const multer = require("multer");
 const serviceAccount = require("./assets/js/service-account");
@@ -26,6 +24,7 @@ app.set("views", path.join(__dirname, "./views"));
 app.use("/assets", express.static(path.join(__dirname, "./assets")));
 app.use("/uploads", express.static(path.join(__dirname, "./uploads")));
 app.use(express.urlencoded({ extended: false }));
+const hbs = require("hbs");
 app.use(
   session({
     name: "my-session",
@@ -36,8 +35,8 @@ app.use(
     proxy: true,
     cookie: {
       maxAge: 1000 * 60 * 60 * 24,
-      httpOnly: false, 
-      secure: false, 
+      httpOnly: false,
+      secure: false,
       sameSite: "None",
     },
   })
@@ -45,6 +44,10 @@ app.use(
 app.use(flash());
 
 app.get("/", home);
+app.post("/name", searchByName);
+app.get("/filter", filterById);
+app.get("/sortbydatedesc", filterByDateDesc);
+app.get("/sortbydateasc", filterByDateAsc);
 app.get("/project", project);
 app.get("/add-project", addProjectView);
 app.post("/project", upload.single("image"), addProject);
@@ -66,12 +69,22 @@ app.get("/register", registerView);
 app.post("/register", register);
 app.post("/login", login);
 app.get("/logout", logout);
+app.get("/test", test);
+app.engine("html", require("hbs").__express);
 
-let {
-  storageBucket
-} = process.env;
+hbs.registerHelper("includes", function (array, value, options) {
+  if (array.includes(value)) {
+    return options.fn(this);
+  } else {
+    return options.inverse(this);
+  }
+});
 
+hbs.registerHelper("ifEquals", function (arg1, arg2, options) {
+  return arg1 === arg2 ? options.fn(this) : options.inverse(this);
+});
 
+let { storageBucket } = process.env;
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -149,12 +162,52 @@ async function register(req, res) {
 
 async function home(req, res) {
   const user = req.session.user;
+  const result = await projectModel.findAll();
+
+  res.render("index", {
+    data: result,
+    user,
+  });
+}
+
+async function filterById(req, res) {
+  const user = req.session.user;
   const result = await projectModel.findAll({
-    include: [
-      {
-        model: userModel,
+    where: { userId: user.id },
+  });
+
+  res.render("index", { data: result, user });
+}
+
+async function searchByName(req, res) {
+  const user = req.session.user;
+  let { projectName } = req.body;
+  // console.log(req.body);
+  const result = await projectModel.findAll({
+    where: {
+      projectName: {
+        [Op.like]: `%${projectName}%`,
       },
-    ],
+    },
+  });
+
+  console.log(result);
+
+  res.render("index", { data: result, user });
+}
+
+async function filterByDateDesc(req, res) {
+  const user = req.session.user;
+  const result = await projectModel.findAll({
+    order: [["createdAt", "DESC"]],
+  });
+
+  res.render("index", { data: result, user });
+}
+async function filterByDateAsc(req, res) {
+  const user = req.session.user;
+  const result = await projectModel.findAll({
+    order: [["createdAt", "ASC"]],
   });
 
   res.render("index", { data: result, user });
@@ -164,7 +217,14 @@ async function project(req, res) {
   const result = await projectModel.findAll();
   const user = req.session.user;
 
-  res.render("project", { data: result, user });
+  res.render("project", {
+    data: result,
+    user,
+  });
+}
+
+async function test(req, res) {
+  res.render("test");
 }
 
 async function deleteProject(req, res) {
@@ -188,21 +248,9 @@ async function deleteProject(req, res) {
   res.redirect("/");
 }
 
-const giveCurrentDateTime = () => {
-  const today = new Date();
-  const date =
-    today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
-  const time =
-    today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-  const dateTime = date + " " + time;
-  return dateTime;
-};
-
 async function addProject(req, res) {
-  const imagePath = req.file.path;
   const user = req.session.user;
   const file = req.file;
-  const dateTime = giveCurrentDateTime();
 
   if (!user) {
     return res.redirect("/login");
@@ -232,17 +280,19 @@ async function addProject(req, res) {
       reactjs,
       nextjs,
     } = req.body;
+    const duration = calculateDuration(startDate, endDate);
     await projectModel.create({
       projectName: projectName,
       startDate: startDate,
       endDate: endDate,
       description: description,
       technologies: [nodejs, typescript, reactjs, nextjs],
-      createdAt: "2024-07-15T16:11:25.556Z",
+      createdAt: new Date(),
       image: url,
       imageId: file.originalname,
       userId: user.id,
       author: user.name,
+      duration: duration.months + " months",
     });
 
     res.redirect("/");
@@ -292,7 +342,6 @@ async function editProject(req, res) {
     description,
     startDate,
     endDate,
-    image,
     nodejs,
     typescript,
     reactjs,
@@ -314,6 +363,7 @@ async function editProject(req, res) {
         id: id,
       },
     });
+    const duration = calculateDuration(startDate, endDate);
 
     if (!project) return res.render("not-found");
 
@@ -323,6 +373,7 @@ async function editProject(req, res) {
     project.endDate = endDate;
     project.image = url;
     project.imageId = file.originalname;
+    project.duration = duration.months + "months";
 
     project.technologies = [nodejs, typescript, reactjs, nextjs];
 
@@ -346,6 +397,27 @@ function contact(req, res) {
 function testimonial(req, res) {
   const user = req.session.user;
   res.render("testimonial", { user });
+}
+
+function calculateDuration(startDate, endDate) {
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+
+  let years = end.getFullYear() - start.getFullYear();
+  let months = end.getMonth() - start.getMonth();
+  let days = end.getDate() - start.getDate();
+
+  if (days < 0) {
+    months--;
+    days += new Date(end.getFullYear(), end.getMonth(), 0).getDate();
+  }
+
+  if (months < 0) {
+    years--;
+    months += 12;
+  }
+
+  return { years, months, days };
 }
 
 async function projectDetail(req, res) {

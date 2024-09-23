@@ -35,5 +35,4 @@ function sendEmail(event) {
     message: inputMessage,
   };
 
-  console.log(contact);
 }

@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
   project.init(
     {
       projectName: DataTypes.STRING,
+      duration: DataTypes.STRING,
       author: DataTypes.STRING,
       description: DataTypes.TEXT,
       technologies: DataTypes.ARRAY(DataTypes.STRING),

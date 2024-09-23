@@ -175,13 +175,14 @@
             <h4 class="poppins-semibold">Duration</h4>
             <p class="poppins-regular">
               <i class="fa-regular fa-calendar-days"></i>
-              {{data.startDate}}
+              {{startDate}}
               -
-              {{data.endDate}}
+              <i class="fa-regular fa-calendar-days"></i>
+              {{endDate}}
             </p>
             <p class="poppins-regular">
-              <i class="fa-regular fa-clock"></i>
-              {{createdDate}}
+              <i class="fa-regular fa-clock fa-lg"></i>
+              {{data.duration}}
 
             </p>
 
@@ -190,12 +191,12 @@
             <h4 class="poppins-semibold">Technologies</h4>
             <p class="poppins-regular">
               {{#if nodejs}}
-                <i class="fa-brands fa-node-js"></i>
+                <i class="fa-brands fa-node-js fa-xl"></i>
                 {{nodejs}}
               {{/if}}
               <i></i>
               {{#if reactjs}}
-                <i class="fa-brands fa-react"></i>
+                <i class="fa-brands fa-react fa-xl"></i>
                 {{reactjs}}
               {{/if}}
               <i></i>
@@ -204,7 +205,7 @@
               {{#if typescript}}
                 <img
                   src="https://img.icons8.com/?size=100&id=cHBUT9SmrD2V&format=png&color=000000"
-                  style="width: 20px; height: 20px"
+                  style="width: 25px; height: 25px"
                   alt=""
                 />
                 {{typescript}}
@@ -214,7 +215,7 @@
               {{#if nextjs}}
                 <img
                   src="https://img.icons8.com/?size=100&id=MWiBjkuHeMVq&format=png&color=000000"
-                  style="width: 20px; height: 20px"
+                  style="width: 25px; height: 25px"
                   alt=""
                 />
                 {{nextjs}}
@@ -227,7 +228,7 @@
             <div class="p-4">
             <h4 class="poppins-semibold">Author</h4>
             <p class="poppins-regular">
-              <i class="fa-regular fa-user"></i>
+              <i class="fa-regular fa-user fa-lg"></i>
               {{data.author}}
             </p>
 

@@ -16,6 +16,9 @@ module.exports = {
         type: Sequelize.TEXT,
         allowNull: false,
       },
+      duration: {
+        type: Sequelize.STRING,
+      },
       technologies: {
         type: Sequelize.ARRAY(Sequelize.STRING)
       },

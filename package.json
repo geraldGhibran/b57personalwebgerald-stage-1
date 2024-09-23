@@ -4,7 +4,9 @@
   "description": "personal web dumbways.id",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon index.js",
+    "revert": "npx sequelize-cli db:migrate:undo:all",
+    "migrate": "npx sequelize-cli db:migrate"
   },
   "author": "gerald",
   "license": "ISC",
@@ -15,6 +17,7 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "express-flash": "^0.0.2",
+    "express-handlebars": "^8.0.1",
     "express-session": "^1.18.0",
     "firebase-admin": "^12.5.0",
     "hbs": "^4.2.0",
