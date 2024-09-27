@@ -160,7 +160,7 @@
         {{/if}}
         <div class="row mb-2">
           <div class="card flex-md-row mb-4 shadow p-3 mb-5 bg-body rounded h-md-250">
-            <div class="col-md-6 col-lg-6 col-xl-6 mr-5">
+            <div class="col-md-7 col-lg-6 col-xl-6 mr-5">
               <div class="card-body d-flex flex-column align-items-start">
                 <div>
                   <h1 class="poppins-bold text-black" style="text-align: center">
@@ -358,10 +358,60 @@
                                   href="/edit-project/{{id}}"
                                   class="btn btn-dark mx-2"
                                 >Edit <i class="fa-solid fa-pen-to-square"></i></a>
-                                <button type="button"
+
+                                <a
+                                  href="/delete-project/{{id}}/imageId/{{imageId}}"
+                                  class="btn btn-danger mx-2"
+                                >Delete <i class="fa-solid fa-trash"></i></a>
+                                
+
+                                {{!-- <button type="button"
                                   class="btn btn-danger"
                                   data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                >Delete <i class="fa-solid fa-trash"></i></button>
+                                >Delete <i class="fa-solid fa-trash"></i></button> --}}
+                                   {{!-- <div
+                                  class="modal fade"
+                                  id="exampleModal"
+                                  tabindex="-1"
+                                  aria-labelledby="exampleModalLabel"
+                                  aria-hidden="true"
+                                >
+                                  <div class="modal-dialog">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h1
+                                          class="modal-title fs-5"
+                                          id="exampleModalLabel"
+                                        >Modal title</h1>
+                                        <button
+                                          type="button"
+                                          class="btn-close"
+                                          data-bs-dismiss="modal"
+                                          aria-label="Close"
+                                        ></button>
+                                      </div>
+                                      <div class="modal-body">
+                                        Are you sure want to delete
+                                        {{projectName}}??
+
+                                         duration : {{duration}}
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button
+                                          type="button"
+                                          class="btn btn-secondary"
+                                          data-bs-dismiss="modal"
+                                        >Close</button>
+                                        <a
+                                          href="/delete-project/{{id}}/imageId/{{imageId}}"
+                                          class="btn btn-danger"
+                                          data-bs-toggle="modal"
+                                          data-bs-target="/delete-project/{{id}}/imageId/{{imageId}}"
+                                        >Delete Post</a>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div> --}}
                               {{else}}
                                 <div></div>
                               {{/ifEquals}}
@@ -370,47 +420,7 @@
                     </div>
                   </div>
                 </div>
-                <div
-                  class="modal fade"
-                  id="exampleModal"
-                  tabindex="-1"
-                  aria-labelledby="exampleModalLabel"
-                  aria-hidden="true"
-                >
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h1
-                          class="modal-title fs-5"
-                          id="exampleModalLabel"
-                        >Modal title</h1>
-                        <button
-                          type="button"
-                          class="btn-close"
-                          data-bs-dismiss="modal"
-                          aria-label="Close"
-                        ></button>
-                      </div>
-                      <div class="modal-body">
-                        Are you sure want to delete
-                        {{projectName}}??
-                      </div>
-                      <div class="modal-footer">
-                        <button
-                          type="button"
-                          class="btn btn-secondary"
-                          data-bs-dismiss="modal"
-                        >Close</button>
-                        <a
-                          href="/delete-project/{{id}}/imageId/{{imageId}}"
-                          class="btn btn-danger"
-                          data-bs-toggle="modal"
-                          data-bs-target="/delete-project/{{id}}/imageId/{{imageId}}"
-                        >Delete Post</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+             
               {{/each}}
             </div>
           </div>

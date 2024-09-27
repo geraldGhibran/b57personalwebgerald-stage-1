@@ -6,7 +6,7 @@ const bcrypt = require("bcrypt");
 const session = require("cookie-session");
 const flash = require("express-flash");
 const admin = require("firebase-admin");
-const { Sequelize, DataTypes, Op } = require("sequelize");
+const { Op } = require("sequelize");
 
 const multer = require("multer");
 const serviceAccount = require("./assets/js/service-account");
@@ -182,7 +182,6 @@ async function filterById(req, res) {
 async function searchByName(req, res) {
   const user = req.session.user;
   let { projectName } = req.body;
-  // console.log(req.body);
   const result = await projectModel.findAll({
     where: {
       projectName: {
@@ -191,7 +190,6 @@ async function searchByName(req, res) {
     },
   });
 
-  console.log(result);
 
   res.render("index", { data: result, user });
 }
