@@ -155,10 +155,12 @@ async function register(req, res) {
     req.flash("success", "Register berhasil!");
     res.redirect("/register");
   } catch (error) {
-    req.flash("error", "Register gagal!");
+    console.log(error.message);
+    req.flash("error", error.message);
     res.redirect("/register");
   }
 }
+
 
 async function home(req, res) {
   const user = req.session.user;

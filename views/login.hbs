@@ -140,7 +140,7 @@
             />
           </div>
           <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-            <form action="/login" method="POST">
+            <form action="/login" method="post" class="needs-validation" novalidate>
               <div
                 class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start"
               >
@@ -159,8 +159,12 @@
                   class="form-control form-control-lg"
                   name="email"
                   placeholder="Enter a valid email address"
+                  required
                 />
                 <label class="form-label" for="form3Example3">Email address</label>
+                 <div class="invalid-feedback">
+                  Please provide a Email.
+                </div>
               </div>
 
               <!-- Password input -->
@@ -171,8 +175,12 @@
                   name="password"
                   class="form-control form-control-lg"
                   placeholder="Enter password"
+                  required
                 />
                 <label class="form-label" for="form3Example4">Password</label>
+                <div class="invalid-feedback">
+                  Please provide a Password.
+                </div>
               </div>
 
               <div class="text-center text-lg-start mt-4 pt-2">
@@ -236,6 +244,29 @@
         </form>
       </div>
     </div> --}}
+
+     <script>
+     
+      // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (() => {
+          'use strict'
+
+          // Fetch all the forms we want to apply custom Bootstrap validation styles to
+          const forms = document.querySelectorAll('.needs-validation')
+
+          // Loop over them and prevent submission
+          Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+              if (!form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+              }
+
+              form.classList.add('was-validated')
+            }, false)
+          })
+        })()
+    </script> 
 
     <script
       src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
